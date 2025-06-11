@@ -1,63 +1,113 @@
 import { login } from '../../authentification/AuthService';
+import { validateLogin } from '../../utils/validations';
+import { loadUsersFromJson } from '../../utils/userLoader';
+
+function normalizePhoneNumber(phone) {
+    let normalized = phone.replace(/\s+/g, '');
+    
+    if (!normalized.startsWith('+')) {
+        normalized = '+221' + normalized;
+    }
+    
+    return normalized;
+}
 
 export function createLoginForm() {
     const formElement = document.createElement('form');
+     
     
     formElement.innerHTML = `
-        <div class="bg-[#00a884] p-8 rounded-lg w-96 container my-52 mx-auto ">
+        <div class="bg-[#00a884] px-8 py-[120px] rounded-lg w-[400px] h-auto container my-52 mx-auto ">
           <h2 class="text-3xl font-bold mb-8 text-center text-white">whatsapp Login</h2>
             <div class="mb-6">
                 <div class="relative">
-                    <input type="text" id="username" 
-                        class="w-full p-3 bg-[#00a884] text-white placeholder-white border border-b-2 rounded-md" 
-                        placeholder="Email" required>
-                    <span class="absolute -left-1 top-1/2 transform -translate-y-3.5  -translate-x-3.5">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
-                            <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
-                        </svg>
-                    </span>
+                    <input type="text" id="phone" 
+                        class="w-full p-3 bg-[#eeeeee] text-black placeholder-[#8a8a8a]  border-3 outline-none rounded-xl" 
+                        placeholder="Phone Number" >                   
                 </div>
             </div>
             <div class="mb-6">
                 <div class="relative">
                     <input type="password" id="password" 
-                        class="w-full p-3 bg-[#00a884] text-white placeholder-white border-none rounded-md" 
-                        placeholder="Password" required>
-                    <span class="absolute left-3 top-1/2 transform -translate-y-1/2">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 20 20" fill="currentColor">
-                            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
-                        </svg>
-                    </span>
+                        class="w-full p-3 bg-[#eeeeee] text-black placeholder-[#8a8a8a]  border-3 outline-none rounded-xl" 
+                        placeholder="Password" >
+                      
                 </div>
             </div>
-            <div class="flex justify-between items-center mb-6">
-                <label class="flex items-center text-white">
-                    <input type="checkbox" class="mr-2 bg-[#00a884] border-none">
-                    Remember me
-                </label>
-                <a href="#" class="text-white hover:underline">Forgot Password?</a>
-            </div>
+          
             <button type="submit" 
-                class="w-full p-3 bg-[#d9fdd3] text-[#00a884] rounded-md hover:bg-[#22a1aa] transition-colors mb-4">
-                LOGIN
+                class="w-full p-3  bg-gradient-to-r from-[#12552e] from 37% to-[#16c9a2] to-37%  text-white text-2xl font-bold rounded-full hover:bg-[#22a1aa] transition-color mb-4">
+                Login
             </button>
-            <p class="text-center text-white">
+            <p class="text-center text-white  text-xl">
                 Don't have an account? 
-                <a href="#" id="register-link" class="text-white hover:underline">Register</a>
+                <a href="#" id="register-link" class="text-[#12552e] underline">Register</a>
             </p>
         </div>
     `;
 
-    formElement.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const username = formElement.querySelector('#username').value;
-        const password = formElement.querySelector('#password').value;
 
-        if (login(username, password)) {
+     function clearErrors() {
+        formElement.querySelectorAll('.text-red-500').forEach(el => el.remove());
+        formElement.querySelectorAll('input').forEach(input => {
+            input.classList.remove('border-red-500');
+        });
+    }
+
+    function showFieldError(field, message) {
+        const input = formElement.querySelector(`#${field}`);
+        input.classList.add('border-red-500');
+        const errorSpan = document.createElement('span');
+        errorSpan.className = 'text-red-500 text-sm mt-1';
+        errorSpan.textContent = message;
+        input.parentNode.appendChild(errorSpan);
+    }
+
+
+
+    formElement.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        clearErrors();
+
+        const loginData = {
+            phone: formElement.querySelector('#phone').value,
+            password: formElement.querySelector('#password').value
+        };
+
+        try {
+             validateLogin(loginData);
+            const users = await loadUsersFromJson();
+            
+            const normalizedInputPhone = normalizePhoneNumber(loginData.phone);
+            
+            const user = users.find(u => {
+                const normalizedStoredPhone = normalizePhoneNumber(u.phone);
+                return normalizedStoredPhone === normalizedInputPhone;
+            });
+
+            if (!user) {
+                showFieldError('phone', 'Ce numéro de téléphone n\'existe pas');
+                return;
+            }
+
+            if (user.password !== loginData.password) {
+                showFieldError('password', 'Mot de passe incorrect');
+                return;
+            }
+
+            await login(loginData.phone, loginData.password);
             window.location.href = '/chat';
-        } else {
-            alert('Invalid credentials');
+
+        } catch (error) {
+            if (error.message.startsWith('{')) {
+                const errors = JSON.parse(error.message);
+                Object.entries(errors).forEach(([field, message]) => {
+                    showFieldError(field, message);
+                });
+            } else {
+                console.error('Login error:', error);
+                showFieldError('phone', 'Une erreur est survenue lors de la connexion');
+            }
         }
     });
 

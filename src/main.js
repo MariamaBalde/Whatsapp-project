@@ -1,36 +1,39 @@
-// import './style.css'
-// import './index.css'
-// import { isAuthenticated } from './authentification/AuthService'
-// import { createLoginForm } from './composant/auth/LoginForm'
-
-// const app = document.querySelector('#app')
-
-// function renderAuth() {
-//     if (isAuthenticated()) {
-//         window.location.href = '/chat'
-//     } else {
-//         const loginForm = createLoginForm()
-//         app.innerHTML = ''
-//         app.appendChild(loginForm)
-//     }
-// }
-
-// renderAuth()
-
-
 import './style.css'
 import './index.css'
 import { isAuthenticated } from './authentification/AuthService'
 import { createLoginForm } from './composant/auth/LoginForm'
 import { createRegisterForm } from './composant/auth/RegisterForm'
+import { createSideBar } from './composant/sidebar/sideBar'
+import { createChatView } from './composant/chat/ChatView'
 
 const app = document.querySelector('#app')
+
+function renderChat() {
+    const container = document.createElement('div');
+    container.className = 'flex h-screen bg-[#111b21]';
+    
+    container.appendChild(createSideBar());
+    
+    container.appendChild(createChatView());
+    
+    return container;
+}
+
+
+function renderApp() {
+    if (isAuthenticated()) {
+        const chatInterface = renderChat();
+        app.innerHTML = '';
+        app.appendChild(chatInterface);
+    } else {
+        renderAuth();
+    }
+}
 
 function renderAuth() {
     const loginForm = createLoginForm()
     const registerForm = createRegisterForm()
 
-    // Gérer la navigation entre login et register
     loginForm.querySelector('#register-link').addEventListener('click', (e) => {
         e.preventDefault()
         app.innerHTML = ''
@@ -43,9 +46,8 @@ function renderAuth() {
         app.appendChild(loginForm)
     })
 
-    // Afficher le formulaire de connexion par défaut
     app.innerHTML = ''
     app.appendChild(loginForm)
 }
 
-renderAuth()
+renderApp()

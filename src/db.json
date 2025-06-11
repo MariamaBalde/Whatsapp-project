@@ -1,0 +1,31 @@
+{
+  "users": [
+    {
+      "id": "25af",
+      "fullname": "Senghor Fallou",
+      "username": "Loufa",
+      "country": "SN",
+      "phone": "+221 77 303 63 08",
+      "password": "fallou123",
+      "created_at": "2025-06-10T10:58:13.281Z"
+    },
+    {
+      "id": "a504",
+      "fullname": "Cheikh Ngom",
+      "username": "Khouss",
+      "country": "SN",
+      "phone": "+221 77 303 63 09",
+      "password": "ngom",
+      "created_at": "2025-06-10T11:42:00.151Z"
+    },
+    {
+      "id": "56a0",
+      "fullname": "malkj",
+      "username": "mia",
+      "country": "GN",
+      "phone": "+224 77 123 45 67",
+      "password": "lkjh",
+      "created_at": "2025-06-10T12:20:27.060Z"
+    }
+  ]
+}

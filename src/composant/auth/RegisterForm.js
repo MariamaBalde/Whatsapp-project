@@ -1,27 +1,65 @@
-import { register } from '../../authentification/AuthService';
+import { register } from "../../authentification/AuthService";
+import { validateForm } from "../../utils/validations";
+import { COUNTRY_CODES } from '../../config/constants';
+
 
 export function createRegisterForm() {
-    const formElement = document.createElement('form');
-    
-    formElement.innerHTML = `
+  const formElement = document.createElement("form");
+  const errorDiv = document.createElement("div");
+  errorDiv.className = "text-red-500 text-sm mt-2";
+
+  formElement.innerHTML = `
         <div class="min-h-screen flex items-center justify-center bg-gray-100">
             <div class="bg-white p-8 rounded-lg shadow-md w-96">
                 <h2 class="text-2xl font-bold mb-6 text-center text-green-600">Create Account</h2>
                 <div class="mb-4">
-                    <input type="text" id="username" 
-                        class="w-full p-2 border rounded" 
-                        placeholder="Choose Username" required>
+                    <label for="fullname" class="block font-medium text-gray-700 mb-1">FullName</label>
+                    <input type="text" id="fullname" 
+                        class="w-full p-2 border rounded  " 
+                        placeholder="FullName"
+                        >
+           
                 </div>
                 <div class="mb-4">
-                    <input type="password" id="password" 
+                    <label for="username" class="block font-medium text-gray-700 mb-1">Username</label>
+                    <input type="text" id="username" 
                         class="w-full p-2 border rounded" 
-                        placeholder="Choose Password" required>
+                        placeholder="Username"
+                        >
                 </div>
+
+                <div class="w-full max-w-sm mx-auto mb-6">
+                    <label for="country" class="block font-medium text-gray-700 mb-1">Country</label>
+                    <select id="country" name="country"
+                        class="block w-full p-3 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm text-gray-700 bg-white"
+                        >
+                        <option value="">Select Country</option>
+                        <option value="SN">Senegal</option>
+                        <option value="ML">Mali</option>
+                        <option value="CI">Côte d'Ivoire</option>
+                        <option value="GN">Guinée</option>
+                    </select>
+                </div>
+                
                 <div class="mb-6">
+                    <label for="phone" class="block font-medium text-gray-700 mb-1">Phone Number</label>
                     <input type="tel" id="phone" 
                         class="w-full p-2 border rounded" 
-                        placeholder="Phone Number" required>
+                        placeholder="XX XXX XX XX"
+ pattern="^\+(?:221|224|223|225)\s?[0-9]{2}\s?[0-9]{3}\s?[0-9]{2}\s?[0-9]{2}$"
+                        title="Format valide: +XXX XX XXX XX XX">
+                  
                 </div>
+
+                <div class="mb-4">
+                    <label for="password" class="block font-medium text-gray-700 mb-1">Choose Password</label>
+                    <input type="password" id="password" 
+                        class="w-full p-2 border rounded"
+                        placeholder="Choose Password"
+                        
+                        minlength="4">
+                </div>
+               
                 <button type="submit" 
                     class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">
                     Register
@@ -34,18 +72,61 @@ export function createRegisterForm() {
         </div>
     `;
 
-    formElement.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const userData = {
-            username: formElement.querySelector('#username').value,
-            password: formElement.querySelector('#password').value,
-            phone: formElement.querySelector('#phone').value
-        };
 
-        if (register(userData)) {
-            window.location.href = '/chat';
+    const countrySelect = formElement.querySelector('#country');
+    const phoneInput = formElement.querySelector('#phone');
+
+    countrySelect.addEventListener('change', (e) => {
+        const selectedCountry = e.target.value;
+        if (selectedCountry && COUNTRY_CODES[selectedCountry]) {
+            const oldNumber = phoneInput.value.replace(/^\+\d{3}/, '').trim();
+            phoneInput.value = `${COUNTRY_CODES[selectedCountry]} ${oldNumber}`;
+            phoneInput.placeholder = `${COUNTRY_CODES[selectedCountry]} XX XXX XX XX`;
         }
     });
+  
+  function clearErrors() {
+    formElement.querySelectorAll('.text-red-500').forEach(el => el.remove());
+    formElement.querySelectorAll('input, select').forEach(input => {
+        input.classList.remove('border-red-500');
+    });
+}
 
-    return formElement;
+
+
+  formElement.addEventListener("submit", async (e) => {
+    e.preventDefault();
+        clearErrors();
+
+    const userData = {
+      fullname: formElement.querySelector("#fullname").value,
+      username: formElement.querySelector("#username").value,
+      country: formElement.querySelector("#country").value,
+      phone: formElement.querySelector("#phone").value,
+      password: formElement.querySelector("#password").value,
+      created_at: new Date().toISOString(),
+    };
+
+   try {
+        validateForm(userData);
+        if (await register(userData)) {
+            alert("Account created successfully!");
+            window.location.href = "/chat";
+        }
+    } catch (error) {
+        const errors = JSON.parse(error.message);
+        Object.entries(errors).forEach(([field, message]) => {
+            const input = formElement.querySelector(`#${field}`);
+            input.classList.add('border-red-500');
+            const errorSpan = document.createElement('span');
+            errorSpan.className = 'text-red-500 text-sm mt-1';
+            errorSpan.textContent = message;
+            input.parentNode.appendChild(errorSpan);
+        });
+    }
+  });
+
+
+
+  return formElement;
 }
