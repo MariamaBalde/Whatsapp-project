@@ -6,6 +6,7 @@ import { createRegisterForm } from './composant/auth/RegisterForm'
 import { createSideBar } from './composant/sidebar/sideBar'
 import { createChatView } from './composant/chat/ChatView'
 
+
 const app = document.querySelector('#app')
 
 function renderChat() {
