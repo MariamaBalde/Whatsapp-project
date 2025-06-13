@@ -21,7 +21,7 @@ function renderChat() {
 }
 
 
-function renderApp() {
+export function renderApp() {
     if (isAuthenticated()) {
         const chatInterface = renderChat();
         app.innerHTML = '';

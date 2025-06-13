@@ -1,6 +1,7 @@
 import { login } from '../../authentification/AuthService';
 import { validateLogin } from '../../utils/validations';
 import { loadUsersFromJson } from '../../utils/userLoader';
+import { renderApp } from '../../main';
 
 function normalizePhoneNumber(phone) {
     let normalized = phone.replace(/\s+/g, '');
@@ -96,7 +97,8 @@ export function createLoginForm() {
             }
 
             await login(loginData.phone, loginData.password);
-            window.location.href = '/chat';
+            // window.location.href = '/chat';
+             renderApp()
 
         } catch (error) {
             if (error.message.startsWith('{')) {

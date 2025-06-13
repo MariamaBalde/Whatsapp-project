@@ -1,7 +1,7 @@
 export function createChatHeader() {
     const header = document.createElement('div');
         header.className = 'h-[60px] bg-[#285b76] flex items-center px-4 border-l border-[#2a373f]';
-    // header.className = 'h-[60px] bg-[#202c33] flex items-center px-4 border-l border-[#2a373f]';
+   
     
     header.innerHTML = `
         <div class="flex items-center flex-1">

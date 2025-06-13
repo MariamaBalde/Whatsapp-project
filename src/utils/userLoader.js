@@ -1,5 +1,6 @@
-// const API_URL = 'http://localhost:3000';
-const API_URL = 'https://json-server-deployment-bq1r.onrender.com';
+// const API_URL = 'https://json-server-deployment-bq1r.onrender.com';
+
+import { API_URL } from "../config/constants";
 
 
 export async function loadUsersFromJson() {

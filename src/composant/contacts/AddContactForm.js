@@ -64,7 +64,7 @@ export function createAddContactForm() {
             </form>
         </div>
     `;
-        // Mettre à jour les initiales en temps réel
+    
     const firstnameInput = container.querySelector('#firstname');
     const lastnameInput = container.querySelector('#lastname');
     const initialsSpan = container.querySelector('.contact-initials span');

@@ -4,3 +4,5 @@ export const COUNTRY_CODES = {
     'CI': '+225',
     'GN': '+224'
 };
+
+export const API_URL = 'https://json-server-deployment-bq1r.onrender.com';
