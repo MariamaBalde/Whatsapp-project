@@ -12,7 +12,7 @@ export function createSideBar() {
     const mainSection = document.createElement("div");
         mainSection.id = "main-section";
 
-        mainSection.className = "w-[420px] flex flex-col bg-[#111b21] border-r border-[#2a373f]";
+        mainSection.className = "w-[420px] flex flex-col bg-[#feffff] border-r border-[#2a373f]";
 
     
     mainSection.appendChild(createUserProfile());

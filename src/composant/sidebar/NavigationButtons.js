@@ -6,9 +6,12 @@ import { createSearchBar } from "./SearchBar";
 import { createUserProfile } from "./UserProfile";
 
 
+
 export function createNavigationButtons() {
     const nav = document.createElement('div');
-    nav.className = 'flex flex-col bg-[#111b21] w-[70px] border-r border-[#2a373f] h-full justify-between py-4';
+        nav.className = 'flex flex-col bg-[#285b76] w-[70px] border-r border-[#2a373f] h-full justify-between py-4';
+
+    // nav.className = 'flex flex-col bg-[#111b21] w-[70px] border-r border-[#2a373f] h-full justify-between py-4';
 
     const currentUser = getCurrentUser();
     const userInitials = currentUser ? currentUser.fullname

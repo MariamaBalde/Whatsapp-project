@@ -4,7 +4,7 @@ export function createSearchBar() {
     searchBar.className = 'px-3 py-2';
     
     searchBar.innerHTML = `
-        <div class="bg-[#202c33] flex items-center rounded-lg px-4 py-1">
+        <div class="bg-[#eaedee] flex items-center rounded-lg px-4 py-1">
            <i class="fa-solid fa-magnifying-glass" style="color: #d8dadf;"></i>
             <input type="text" 
                    placeholder="Rechercher ou démarrer une nouvelle discussion" 

@@ -4,7 +4,7 @@ export function createChatList() {
 
      chatList.style.cssText = `
         scrollbar-width: thin;
-        scrollbar-color: #374045 #111b21;
+        scrollbar-color: #374045 #285b76;
     `;
     
      chatList.innerHTML = `
@@ -15,7 +15,7 @@ export function createChatList() {
             }
             
             ::-webkit-scrollbar-track {
-                background: #111b21;
+                background: #285b76;
             }
             
             ::-webkit-scrollbar-thumb {
@@ -35,11 +35,11 @@ export function createChatList() {
 
 function generateChatItems() {
     return Array(20).fill(0).map(() => `
-        <div class="flex items-center px-3 py-3 hover:bg-[#202c33] cursor-pointer">
+        <div class="flex items-center px-3 py-3 hover:bg-[#d8dadf] cursor-pointer">
             <img src="https://via.placeholder.com/40" class="w-12 h-12 rounded-full" alt="Contact">
             <div class="ml-3 flex-1 border-b border-[#2a373f] pb-3">
                 <div class="flex justify-between items-center">
-                    <span class="text-[#e9edef] font-medium">Contact Name</span>
+                    <span class="text-[#285b76] font-medium">Contact Name</span>
                     <span class="text-[#8696a0] text-sm">10:30</span>
                 </div>
                 <div class="flex items-center">

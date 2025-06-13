@@ -11,7 +11,7 @@ const app = document.querySelector('#app')
 
 function renderChat() {
     const container = document.createElement('div');
-    container.className = 'flex h-screen bg-[#111b21]';
+    container.className = 'flex h-screen bg-[#285b76]';
     
     container.appendChild(createSideBar());
     

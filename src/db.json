@@ -27,5 +27,21 @@
       "password": "lkjh",
       "created_at": "2025-06-10T12:20:27.060Z"
     }
+  ],
+  "contacts": [
+    {
+      "id": "ffca",
+      "name": "Mariama Baldé",
+      "country": "SN",
+      "phone": "77 404 76 68",
+      "created_at": "2025-06-13T01:32:14.147Z"
+    },
+    {
+      "id": "8fc8",
+      "name": "khadidiatou Baldé",
+      "country": "GN",
+      "phone": "77 453 54 37",
+      "created_at": "2025-06-13T01:33:18.569Z"
+    }
   ]
 }
