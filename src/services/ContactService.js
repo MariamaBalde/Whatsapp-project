@@ -1,23 +1,6 @@
-// import { loadFromStorage, saveToStorage } from '../utils/storage';
+// const API_URL = 'http://localhost:3000';
+const API_URL = 'https://json-server-deployment-bq1r.onrender.com/';
 
-// export function saveContact(contactData) {
-//     const contacts = loadFromStorage('contacts') || [];
-//     const newContact = {
-//         id: Date.now().toString(),
-//         ...contactData,
-//         created_at: new Date().toISOString()
-//     };
-    
-//     contacts.push(newContact);
-//     saveToStorage('contacts', contacts);
-//     return newContact;
-// }
-
-// export function getContacts() {
-//     return loadFromStorage('contacts') || [];
-// }
-
-const API_URL = 'http://localhost:3000';
 
 export async function saveContact(contactData) {
     try {
