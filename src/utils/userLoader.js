@@ -1,4 +1,3 @@
-// const API_URL = 'https://json-server-deployment-bq1r.onrender.com';
 
 import { API_URL } from "../config/constants";
 

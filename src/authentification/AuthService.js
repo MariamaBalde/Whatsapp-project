@@ -37,6 +37,7 @@ export async function login(phone, password) {
 
         if (user.password === password) {
             saveToStorage('currentUser', user);
+            history.pushState(null, '', '/chat');
             return true;
         }
 
@@ -71,7 +72,6 @@ export async function register(userData) {
 
 
 export function logout() {
-
   localStorage.removeItem("currentUser");
   
 }
