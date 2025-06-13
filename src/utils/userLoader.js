@@ -1,4 +1,6 @@
-const API_URL = 'http://localhost:3000';
+// const API_URL = 'http://localhost:3000';
+const API_URL = 'https://json-server-deployment-bq1r.onrender.com';
+
 
 export async function loadUsersFromJson() {
     const response = await fetch(`${API_URL}/users`);
