@@ -35,7 +35,7 @@ export function createSettingsView() {
       const logoutButton = settingsView.querySelector('.logout-button');
     logoutButton.addEventListener('click', () => {
         logout();
-        window.location.href = '/login.html';
+        window.location.href = '';
     });
     return settingsView;
 }

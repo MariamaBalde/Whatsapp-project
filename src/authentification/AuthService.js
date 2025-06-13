@@ -71,7 +71,9 @@ export async function register(userData) {
 
 
 export function logout() {
+
   localStorage.removeItem("currentUser");
+  
 }
 
 export function getCurrentUser() {
