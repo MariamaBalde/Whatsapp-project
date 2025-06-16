@@ -97,7 +97,6 @@ export function createLoginForm() {
             }
 
             await login(loginData.phone, loginData.password);
-            // window.location.href = '/chat';
              renderApp()
 
         } catch (error) {

@@ -1,14 +1,13 @@
 export function createChatHeader() {
     const header = document.createElement('div');
-        header.className = 'h-[60px] bg-[#285b76] flex items-center px-4 border-l border-[#2a373f]';
+    header.className = 'chat-header h-[60px] bg-[#285b76] flex items-center px-4 border-l border-[#2a373f]';
    
-    
     header.innerHTML = `
         <div class="flex items-center flex-1">
             <img src="https://via.placeholder.com/40" class="w-10 h-10 rounded-full" alt="Contact">
             <div class="ml-4 text-[#e9edef]">
-                <div class="font-medium">Contact Name</div>
-                <div class="text-sm text-[#8696a0]">en ligne</div>
+                <div class="contact-name font-medium">Sélectionnez un contact</div>
+                <div class="contact-status text-sm text-[#8696a0]">...</div>
             </div>
         </div>
         <div class="flex items-center space-x-3 text-[#aebac1]">

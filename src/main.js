@@ -31,28 +31,8 @@ export function renderApp() {
     }
 }
 
-// function renderAuth() {
-//     const loginForm = createLoginForm()
-//     const registerForm = createRegisterForm()
-
-//     loginForm.querySelector('#register-link').addEventListener('click', (e) => {
-//         e.preventDefault()
-//         app.innerHTML = ''
-//         app.appendChild(registerForm)
-//     })
-
-//     registerForm.querySelector('#login-link').addEventListener('click', (e) => {
-//         e.preventDefault()
-//         app.innerHTML = ''
-//         app.appendChild(loginForm)
-//     })
-
-//     app.innerHTML = ''
-//     app.appendChild(loginForm)
-// }
 
 
-// Gestionnaire de routes
 function handleRoute() {
     const path = window.location.pathname;
     

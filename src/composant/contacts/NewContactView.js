@@ -16,7 +16,7 @@ export function createNewContactView() {
             .map(name => name.charAt(0).toUpperCase())
             .join('');
           return  `
-            <div class="flex items-center p-3 cursor-pointer rounded-lg hover:bg-[#b7bbbd]">
+            <div class="contact-item flex items-center p-3 cursor-pointer rounded-lg hover:bg-[#b7bbbd]"  data-contact='${JSON.stringify(contact)}'>
                
                 <div class="w-12 h-12 mr-4 bg-[#202c33] rounded-full flex items-center justify-center contact-initials">
     <span class="text-[#8696a0] text-xl font-semibold">${initials}</span>
@@ -120,6 +120,31 @@ export function createNewContactView() {
     });
 
      loadContacts();
+
+
+container.addEventListener('click', (e) => {
+    const contactItem = e.target.closest('.contact-item');
+    if (contactItem) {
+        const contactData = JSON.parse(contactItem.dataset.contact);
+        const mainSection = document.querySelector('#main-section');
+        if (mainSection) {
+            const parent = mainSection.parentElement.parentElement;
+            if (parent) {
+                const chatHeader = parent.querySelector('.chat-header');
+                if (chatHeader) {
+                    chatHeader.querySelector('.contact-name').textContent = contactData.name;
+                    chatHeader.querySelector('.contact-status').textContent = 'en ligne';
+                }
+               
+                const messageInput = parent.querySelector('.message-input').parentElement;
+                if (messageInput && messageInput.setContactSelected) {
+                                        messageInput.setContactSelected(contactData.id, contactData.name);
+
+                }
+            }
+        }
+    }
+});
 
     return container;
 }
