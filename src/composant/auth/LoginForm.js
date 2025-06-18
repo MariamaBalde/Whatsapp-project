@@ -18,7 +18,7 @@ export function createLoginForm() {
      
     
     formElement.innerHTML = `
-        <div class="bg-[#00a884] px-8 py-[120px] rounded-lg w-[400px] h-auto container my-52 mx-auto ">
+        <div class="bg-[#285b76] px-8 py-[120px] rounded-lg w-[400px] h-auto container my-52 mx-auto ">
           <h2 class="text-3xl font-bold mb-8 text-center text-white">whatsapp Login</h2>
             <div class="mb-6">
                 <div class="relative">
@@ -37,12 +37,12 @@ export function createLoginForm() {
             </div>
           
             <button type="submit" 
-                class="w-full p-3  bg-gradient-to-r from-[#12552e] from 37% to-[#16c9a2] to-37%  text-white text-2xl font-bold rounded-full hover:bg-[#22a1aa] transition-color mb-4">
+                class="w-full p-3  bg-gradient-to-r from-[#30789f] from 37% to-[#132c39] to-37%  text-white text-2xl font-bold rounded-full hover:bg-[#22a1aa] transition-color mb-4">
                 Login
             </button>
             <p class="text-center text-white  text-xl">
                 Don't have an account? 
-                <a href="#" id="register-link" class="text-[#12552e] underline">Register</a>
+                <a href="#" id="register-link" class="text-[#0a2330] underline">Register</a>
             </p>
         </div>
     `;

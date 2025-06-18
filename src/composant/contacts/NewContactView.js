@@ -16,7 +16,13 @@ export function createNewContactView() {
             .map(name => name.charAt(0).toUpperCase())
             .join('');
           return  `
-            <div class="contact-item flex items-center p-3 cursor-pointer rounded-lg hover:bg-[#b7bbbd]"  data-contact='${JSON.stringify(contact)}'>
+           <div class="contact-item flex items-center p-3 cursor-pointer rounded-lg hover:bg-[#b7bbbd]" 
+                 data-contact='${JSON.stringify({
+                     id: contact.id,
+                     name: contact.name,
+                     phone: contact.phone,
+                     country: contact.country
+                 })}'>
                
                 <div class="w-12 h-12 mr-4 bg-[#202c33] rounded-full flex items-center justify-center contact-initials">
     <span class="text-[#8696a0] text-xl font-semibold">${initials}</span>
@@ -119,33 +125,49 @@ export function createNewContactView() {
         }
     });
 
+
+newGroupButton.addEventListener('click', async () => {
+    try {
+        // Import dynamique ES6 correct (notez l'extension .js et le chemin sans espace)
+        const { createGroupCreationView } = await import('../groupes/ GroupCreationView');
+        
+        const mainSection = document.querySelector('#main-section');
+        if (mainSection) {
+            mainSection.innerHTML = '';
+            mainSection.appendChild(createGroupCreationView());
+        }
+    } catch (error) {
+        console.error('Erreur lors du chargement de GroupCreationView:', error);
+    }
+});
+
      loadContacts();
+
 
 
 container.addEventListener('click', (e) => {
     const contactItem = e.target.closest('.contact-item');
     if (contactItem) {
         const contactData = JSON.parse(contactItem.dataset.contact);
+       
+        const event = new CustomEvent('chat-selected', {
+            detail: contactData
+        });
+        document.dispatchEvent(event);
+        
+        // Fermer la vue des contacts (optionnel)
         const mainSection = document.querySelector('#main-section');
         if (mainSection) {
-            const parent = mainSection.parentElement.parentElement;
-            if (parent) {
-                const chatHeader = parent.querySelector('.chat-header');
-                if (chatHeader) {
-                    chatHeader.querySelector('.contact-name').textContent = contactData.name;
-                    chatHeader.querySelector('.contact-status').textContent = 'en ligne';
-                }
-               
-                const messageInput = parent.querySelector('.message-input').parentElement;
-                if (messageInput && messageInput.setContactSelected) {
-                                        messageInput.setContactSelected(contactData.id, contactData.name);
-
-                }
-            }
+            mainSection.innerHTML = '';
+            const userProfileHeader = createUserProfile();
+            mainSection.appendChild(userProfileHeader);
+            const searchBar = createSearchBar();
+            mainSection.appendChild(searchBar);
+            const discussionView = createChatList();
+            mainSection.appendChild(discussionView);
         }
     }
 });
-
     return container;
 }
 

@@ -9,9 +9,9 @@ export function createRegisterForm() {
   errorDiv.className = "text-red-500 text-sm mt-2";
 
   formElement.innerHTML = `
-        <div class="min-h-screen flex items-center justify-center bg-gray-100">
-            <div class="bg-white p-8 rounded-lg shadow-md w-96">
-                <h2 class="text-2xl font-bold mb-6 text-center text-green-600">Create Account</h2>
+        <div class="min-h-screen flex items-center justify-center bg-white">
+            <div class="bg-white p-8 rounded-2xl shadow-lg w-96">
+                <h2 class="text-2xl font-bold mb-6 text-center text-[#285b76]">Create Account</h2>
                 <div class="mb-4">
                     <label for="fullname" class="block font-medium text-gray-700 mb-1">FullName</label>
                     <input type="text" id="fullname" 
@@ -61,12 +61,12 @@ export function createRegisterForm() {
                 </div>
                
                 <button type="submit" 
-                    class="w-full bg-green-500 text-white p-2 rounded hover:bg-green-600">
+                    class="w-full bg-[#285b76] text-white p-2 rounded hover:bg-[#3989b4]">
                     Register
                 </button>
                 <p class="mt-4 text-center text-gray-600">
                     Already have an account? 
-                    <a href="#" id="login-link" class="text-green-500">Login</a>
+                    <a href="#" id="login-link" class="text-[#285b76]">Login</a>
                 </p>
             </div>
         </div>

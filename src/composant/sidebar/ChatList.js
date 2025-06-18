@@ -65,7 +65,6 @@ export function createChatList() {
         }).join('');
     }
 
-    // Charger la liste initiale
     loadChats().then(chatHTML => {
         chatList.innerHTML = `
             <style>
@@ -90,35 +89,23 @@ export function createChatList() {
         `;
     });
 
-    chatList.addEventListener('click', (e) => {
-        const chatItem = e.target.closest('.chat-item');
-        if (chatItem) {
-            const contactId = chatItem.dataset.contactId;
-            const event = new CustomEvent('chat-selected', { 
-                detail: { contactId } 
-            });
+    chatList.addEventListener('click', async (e) => {
+    const chatItem = e.target.closest('.chat-item');
+    if (chatItem) {
+        const contactId = chatItem.dataset.contactId;
+        const contacts = await getContacts();
+        const contact = contacts.find(c => c.id === contactId);
+
+        if (contact) {
+            const event = new CustomEvent('chat-selected', { detail: contact });
             document.dispatchEvent(event);
         }
-    });
+    }
+});
+
     
     return chatList;
 }
 
-function generateChatItems() {
-    return Array(20).fill(0).map(() => `
-        <div class="flex items-center px-3 py-3 hover:bg-[#d8dadf] cursor-pointer">
-            <img src="https://via.placeholder.com/40" class="w-12 h-12 rounded-full" alt="Contact">
-            <div class="ml-3 flex-1 border-b border-[#2a373f] pb-3">
-                <div class="flex justify-between items-center">
-                    <span class="text-[#285b76] font-medium">Contact Name</span>
-                    <span class="text-[#8696a0] text-sm">10:30</span>
-                </div>
-                <div class="flex items-center">
-                    <span class="text-[#8696a0] text-sm truncate">Last message...</span>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
 
 

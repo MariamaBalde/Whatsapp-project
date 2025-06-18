@@ -67,7 +67,6 @@ export function createAddContactForm() {
     
     const firstnameInput = container.querySelector('#firstname');
     const lastnameInput = container.querySelector('#lastname');
-    const initialsSpan = container.querySelector('.contact-initials span');
 
     function updateInitials() {
         const firstname = firstnameInput.value.trim();
@@ -78,7 +77,7 @@ export function createAddContactForm() {
             .filter(initial => initial)
             .join('');
             
-        initialsSpan.textContent = initials || 'AN';
+        // initialsSpan.textContent = initials || 'AN';
     }
 
     firstnameInput.addEventListener('input', updateInitials);
